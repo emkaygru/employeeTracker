@@ -6,30 +6,57 @@ const mysql = require('mysql');
 
 
 
-function drePrompts(){
+function startScreen(){
 
     inquirer.prompt([
         {
-            type: 'confirm',
-            message: 'Would you like to add a new department?',
-            name: 'dChoice',
-            // if user chooses "true" then ask questions about updating the department, and deleting department 
-           
-        },
-        {
-            type: 'confirm',
-            message: 'Would you like to add a new role?',
-            name: 'rChoice'
-             // if user chooses "true" then ask questions about updating the role, and deleting role 
-        },
-        {
-            type: 'confirm',
-            message: 'Would you like to add a new employee?',
-            name: 'eChoice'
-             // if user chooses "true" then ask questions about updating the employee, and deleting employee 
+            type: 'list',
+            message: 'Would you like to do?',
+            name: 'choice',
+            choices: [
+             "View All Employees?", 
+              "View All Employee's By Roles?",
+              "View all Employees By Departments", 
+              "Update Employee",
+              "Add Employee?",
+              "Add Role?",
+              "Add Department?"
+            ]
+    
         }
 
-    ]);
+    ]).then(function(result){
+        switch (result.choice){
+            case "View All Employees":
+            viewAllEmployees();
+            break;
 
+            case "View All Employees by Roles":
+            viewAllEmployeesByRoles();
+            break;
+
+            case "View All Employees by Departments":
+            viewAllEmployeesByDepartments();
+            break;
+
+            case "Update Employee":
+            updateEmployee();
+            break;
+
+            case "Add Employee":
+            addEmployee();
+            break;
+
+            case "Add Role":
+            addRole();
+            break;
+
+            case "Add Department":
+            addDepartment();
+            break;
+        }
+    })
 
 };
+
+// Function calls 
