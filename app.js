@@ -20,6 +20,7 @@ function startScreen() {
           "Add Employee?",
           "Add Role?",
           "Add Department?",
+          "Quit",
         ],
       },
     ])
@@ -51,6 +52,10 @@ function startScreen() {
 
         case "Add Department":
           addDepartment();
+          break;
+
+        case "Quit":
+          quit();
           break;
       }
     });
@@ -107,3 +112,18 @@ function updateEmployee() {
       );
     });
 }
+
+function addEmployee() {
+  inquirer.prompt([
+    {
+      type: "input",
+      message: "What is the employees first name?",
+      name: "aeFirstName",
+    },
+  ]);
+}
+
+// function quit(){
+//     connection.end();
+//     process.exit();
+// }
