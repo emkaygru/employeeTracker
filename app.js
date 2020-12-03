@@ -5,7 +5,9 @@ const cTable = require("console.table");
 const mysql = require("mysql");
 const { table } = require("console");
 
+// start screen questions
 function startScreen() {
+  // inquirer prompts for user to select what they want to do to begin
   inquirer
     .prompt([
       {
@@ -25,6 +27,7 @@ function startScreen() {
       },
     ])
     .then(function (result) {
+      // switch case for user choices
       switch (result.choice) {
         case "View All Employees":
           viewAllEmployees();
@@ -61,8 +64,9 @@ function startScreen() {
     });
 }
 
-// Function calls ----------------------------------------------------------------
+// ---------------------------- Function calls ---------------------------- //
 
+// ---------------------------- View All Employees ---------------------------- //
 function viewAllEmployees() {
   connection.query("SELECT * FROM employee", function (err, res) {
     if (err) throw err;
@@ -71,6 +75,7 @@ function viewAllEmployees() {
   });
 }
 
+// ---------------------------- View All Employees By Roles ---------------------------- //
 function viewAllEmployeesByRoles() {
   connection.query("SELECT * FROM role", function (err, res) {
     if (err) throw err;
@@ -79,6 +84,7 @@ function viewAllEmployeesByRoles() {
   });
 }
 
+// ---------------------------- View All Employees by Department ---------------------------- //----- //
 function viewAllEmployeesByDepartments() {
   connection.query("SELECT * FROM department", function (err, res) {
     if (err) throw err;
@@ -87,6 +93,7 @@ function viewAllEmployeesByDepartments() {
   });
 }
 
+// ---------------------------- Update Employee ---------------------------- //
 function updateEmployee() {
   inquirer
     .prompt([
@@ -113,6 +120,7 @@ function updateEmployee() {
     });
 }
 
+// ---------------------------- Add Employee ---------------------------- //
 function addEmployee() {
   inquirer
     .prompt([
@@ -138,11 +146,72 @@ function addEmployee() {
       },
     ])
     .then(function (answer) {
-      connection.query("SELECT FROM ");
+      connection.query(
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+        [
+          answer.aeFirstName,
+          answer.aeLastName,
+          answer.aeId,
+          answer.aeManagerId,
+        ],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          startScreen();
+        }
+      );
     });
 }
 
-// function quit(){
-//     connection.end();
-//     process.exit();
-// }
+// ---------------------------- Add Role ---------------------------- //
+function addRole() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the role you want to add?",
+        name: "aRRole",
+      },
+      {
+        type: "input",
+        message: "What is the salary for the role?",
+        name: "aRSalary",
+      },
+      {
+        type: "input",
+        message: "What is the department id number?",
+        name: "aRId",
+      },
+    ])
+    .then(function (answer) {
+      connection.query(
+        "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+        [answer.aRRole, answer.aRSalary, answer.aRId],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+        }
+      );
+    });
+}
+
+// ---------------------------- Add Department ---------------------------- //
+function addDepartment() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the name of the department?",
+        name: "departmentName",
+      },
+    ])
+    .then((answer) => {
+      connection.query("INSERT INTO department (name) VALUES (?)");
+    });
+}
+
+// ---------------------------- Quit Function---------------------------- //
+function quit() {
+  connection.end();
+  process.exit();
+}
