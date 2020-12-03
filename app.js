@@ -5,6 +5,25 @@ const cTable = require("console.table");
 const mysql = require("mysql");
 const { table } = require("console");
 
+// =============== SQL Connection  ===============  //
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "rootroot",
+  database: "employeeTracker",
+});
+
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+// =============== SQL Connection  ===============  //
+//                                                  //
+//////// Stay here & do a little dance  //////////////
+//                                                 //
+// =============== Start Screen  ===============  //
+
 // start screen questions
 function startScreen() {
   // inquirer prompts for user to select what they want to do to begin
