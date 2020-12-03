@@ -103,7 +103,7 @@ function viewAllEmployeesByRoles() {
   });
 }
 
-// ---------------------------- View All Employees by Department ---------------------------- //----- //
+// ---------------------------- View All Employees by Department ------------------------- //
 function viewAllEmployeesByDepartments() {
   connection.query("SELECT * FROM department", (err, res) => {
     if (err) throw err;
