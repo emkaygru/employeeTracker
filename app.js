@@ -26,7 +26,7 @@ function startScreen() {
         ],
       },
     ])
-    .then(function (result) {
+    .then((result) => {
       // switch case for user choices
       switch (result.choice) {
         case "View All Employees":
@@ -68,7 +68,7 @@ function startScreen() {
 
 // ---------------------------- View All Employees ---------------------------- //
 function viewAllEmployees() {
-  connection.query("SELECT * FROM employee", function (err, res) {
+  connection.query("SELECT * FROM employee", (err, res) => {
     if (err) throw err;
     console.table(res);
     startScreen();
@@ -77,7 +77,7 @@ function viewAllEmployees() {
 
 // ---------------------------- View All Employees By Roles ---------------------------- //
 function viewAllEmployeesByRoles() {
-  connection.query("SELECT * FROM role", function (err, res) {
+  connection.query("SELECT * FROM role", (err, res) => {
     if (err) throw err;
     console.table(res);
     startScreen();
@@ -86,7 +86,7 @@ function viewAllEmployeesByRoles() {
 
 // ---------------------------- View All Employees by Department ---------------------------- //----- //
 function viewAllEmployeesByDepartments() {
-  connection.query("SELECT * FROM department", function (err, res) {
+  connection.query("SELECT * FROM department", (err, res) => {
     if (err) throw err;
     console.table(res);
     startScreen();
@@ -108,11 +108,11 @@ function updateEmployee() {
         name: "updateERole",
       },
     ])
-    .then(function (answer) {
+    .then((answer) => {
       connection.query(
         "UPDATE employee SET role_id=? WHERE first_name= ?",
         [answer.updateERole, answer.employeeUpdate],
-        function (err, res) {
+        (err, res) => {
           if (err) throw err;
           console.log(res);
         }
@@ -145,7 +145,7 @@ function addEmployee() {
         name: "aeManagerId",
       },
     ])
-    .then(function (answer) {
+    .then((answer) => {
       connection.query(
         "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
         [
@@ -154,7 +154,7 @@ function addEmployee() {
           answer.aeId,
           answer.aeManagerId,
         ],
-        function (err, res) {
+        (err, res) => {
           if (err) throw err;
           console.table(res);
           startScreen();
@@ -183,11 +183,11 @@ function addRole() {
         name: "aRId",
       },
     ])
-    .then(function (answer) {
+    .then((answer) => {
       connection.query(
         "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
         [answer.aRRole, answer.aRSalary, answer.aRId],
-        function (err, res) {
+        (err, res) => {
           if (err) throw err;
           console.table(res);
         }
@@ -206,7 +206,15 @@ function addDepartment() {
       },
     ])
     .then((answer) => {
-      connection.query("INSERT INTO department (name) VALUES (?)");
+      connection.query(
+        "INSERT INTO department (name) VALUES (?)",
+        [answer.departmentName],
+        (err, res) => {
+          if (err) throw err;
+          console.table(res);
+          startScreen();
+        }
+      );
     });
 }
 
