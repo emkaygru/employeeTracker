@@ -32,33 +32,14 @@ CREATE TABLE employee (
 );
 
 -- DEPARTMENT SEEDS -- 
-INSERT INTO employeeTracker (department) VALUES ('Accounting');
-INSERT INTO employeeTracker (department) VALUES ('Legal');
-INSERT INTO employeeTracker (department) VALUES ('Engineering');
-INSERT INTO employeeTracker (department) VALUES ('Research and Development');
-INSERT INTO employeeTracker (department) VALUES ('Marketing');
+INSERT INTO department (name) 
+VALUES ('Accounting'),('Legal'),('Engineering'),('Research and Development'),('Marketing');
 
 -- EMPLOYEE ROLES SEEDS -- 
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Chief Design Engineer', 164890, 3);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Product Engineer', 65069, 3);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Administrative Officer', 132916, 2);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Project Manager', 134239, 4);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Marketing Director', 134239, 5);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Web Specialist', 65069, 5);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Desktop Support Technician', 50756, 3);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Accountant', 77933, 1);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Stocks Manager', 65069, 1);
-INSERT INTO employeeTracker (role, salary, department_id) VALUES ('Lawyer', 86166, 2);
+INSERT INTO role (title, salary, department_id) 
+VALUES ('Chief Design Engineer', 164890, 3),('Product Engineer', 65069, 3),('Administrative Officer', 132916, 2),('Project Manager', 134239, 4),('Marketing Director', 134239, 5),('Web Specialist', 65069, 5),('Desktop Support Technician', 50756, 3),('Accountant', 77933, 1),('Stocks Manager', 65069, 1),('Lawyer', 86166, 2);
 
 
 -- EMPLOYEE NAME SEEDS -- 
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Obidiah', 'Dann', null, 1);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Lincoln', 'Kemmer', null, 2);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Eduardo', 'Wieprecht', null, 3);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Ferrell', 'Dikelin', 1, 4);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Madlin', 'Cartman', null, 5);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Rikki', 'Flounders', 4, 6);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Frances', 'Sandcraft', 2, 7);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Giacinta', 'Staterfield', null, 8);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Quentin', 'Shewring', 5, 9);
-INSERT INTO employeeTracker (first_name, last_name, manager_id, role_id) VALUES ('Thaine', 'Leband', 6, 10);
+INSERT INTO employee (first_name, last_name, manager_id, role_id) 
+VALUES ('Obidiah', 'Dann', null, 1),('Lincoln', 'Kemmer', null, 2),('Eduardo', 'Wieprecht', null, 3),('Ferrell', 'Dikelin', 1, 4),('Madlin', 'Cartman', null, 5),('Rikki', 'Flounders', 4, 6),('Frances', 'Sandcraft', 2, 7),('Giacinta', 'Staterfield', null, 8),('Quentin', 'Shewring', 5, 9),('Thaine', 'Leband', 6, 10);

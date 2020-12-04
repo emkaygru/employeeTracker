@@ -16,6 +16,7 @@ var con = mysql.createConnection({
 con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
+  startScreen();
 });
 
 // =============== SQL Connection  ===============  //
@@ -31,7 +32,7 @@ function startScreen() {
     .prompt([
       {
         type: "list",
-        message: "Would you like to do?",
+        message: "What would you like to do?",
         name: "choice",
         choices: [
           "View All Employees?",
