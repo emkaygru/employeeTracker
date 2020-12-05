@@ -31,13 +31,13 @@ function startScreen() {
     message: "What would you like to do?",
     name: "choice",
     choices: [
-      "View All Employees?",
-      "View All Employees By Roles?",
+      "View All Employees",
+      "View All Employees By Roles",
       "View all Employees By Departments",
       "Update Employee",
-      "Add Employee?",
-      "Add Role?",
-      "Add Department?",
+      "Add Employee",
+      "Add Role",
+      "Add Department",
       "Quit",
     ]
   }, ]).then((result) => {
@@ -82,7 +82,7 @@ function startScreen() {
 
 // ---------------------------- View All Employees ---------------------------- //
 function viewAllEmployees() {
-  connection.query("SELECT * FROM employee", (err, res) => {
+  connection.query("SELECT * FROM employee;", (err, res) => {
     if (err) throw err;
     console.table(res);
     startScreen();
