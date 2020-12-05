@@ -1,12 +1,10 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
-
 const mysql = require("mysql");
-const { table } = require("console");
 
 // =============== SQL Connection  ===============  //
-var con = mysql.createConnection({
+const con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "rootroot",
@@ -15,7 +13,7 @@ var con = mysql.createConnection({
 
 con.connect(function (err) {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("Connected as id: " + con.threadId);
   startScreen();
 });
 
@@ -29,23 +27,21 @@ con.connect(function (err) {
 function startScreen() {
   // inquirer prompts for user to select what they want to do to begin
   inquirer
-    .prompt([
-      {
-        type: "list",
-        message: "What would you like to do?",
-        name: "choice",
-        choices: [
-          "View All Employees?",
-          "View All Employee's By Roles?",
-          "View all Employees By Departments",
-          "Update Employee",
-          "Add Employee?",
-          "Add Role?",
-          "Add Department?",
-          "Quit",
-        ],
-      },
-    ])
+    .prompt([{
+      type: "list",
+      message: "What would you like to do?",
+      name: "choice",
+      choices: [
+        "View All Employees?",
+        "View All Employees By Roles?",
+        "View all Employees By Departments",
+        "Update Employee",
+        "Add Employee?",
+        "Add Role?",
+        "Add Department?",
+        "Quit",
+      ],
+    }, ])
     .then((result) => {
       // switch case for user choices
       switch (result.choice) {
@@ -116,8 +112,7 @@ function viewAllEmployeesByDepartments() {
 // ---------------------------- Update Employee ---------------------------- //
 function updateEmployee() {
   inquirer
-    .prompt([
-      {
+    .prompt([{
         type: "input",
         message: "Which employee would you like to update?",
         name: "employeeUpdate",
@@ -143,15 +138,14 @@ function updateEmployee() {
 // ---------------------------- Add Employee ---------------------------- //
 function addEmployee() {
   inquirer
-    .prompt([
-      {
+    .prompt([{
         type: "input",
-        message: "What is the employees first name?",
+        message: "What is the employee's first name?",
         name: "aeFirstName",
       },
       {
         type: "input",
-        message: "What is the employees last name?",
+        message: "What is the employee's last name?",
         name: "aeLastName",
       },
       {
@@ -186,8 +180,7 @@ function addEmployee() {
 // ---------------------------- Add Role ---------------------------- //
 function addRole() {
   inquirer
-    .prompt([
-      {
+    .prompt([{
         type: "input",
         message: "What is the role you want to add?",
         name: "aRRole",
@@ -218,13 +211,11 @@ function addRole() {
 // ---------------------------- Add Department ---------------------------- //
 function addDepartment() {
   inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "What is the name of the department?",
-        name: "departmentName",
-      },
-    ])
+    .prompt([{
+      type: "input",
+      message: "What is the name of the department?",
+      name: "departmentName",
+    }, ])
     .then((answer) => {
       connection.query(
         "INSERT INTO department (name) VALUES (?)",
@@ -242,4 +233,4 @@ function addDepartment() {
 function quit() {
   connection.end();
   process.exit();
-}
+};
