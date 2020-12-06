@@ -29,6 +29,7 @@ CREATE TABLE role
   manager_id INT,
   role_id INT,
   CONSTRAINT FK_manager FOREIGN KEY(manager_id) REFERENCES employee(id),
+  -- https://www.mysqltutorial.org/mysql-on-delete-cascade/ -- 
   CONSTRAINT FK_role FOREIGN KEY(role_id) REFERENCES role(id) ON DELETE CASCADE
 );
 
