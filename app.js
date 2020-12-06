@@ -10,7 +10,7 @@ function initialLoad() {
   clear();
 
   console.log(
-    chalk.yellow(
+    chalk.green(
       figlet.textSync('Employee Tracker', {
         horizontalLayout: 'full'
       })
@@ -305,7 +305,7 @@ function quit() {
   clear();
 
   console.log(
-    chalk.yellow(
+    chalk.green(
       figlet.textSync('Goodbye', {
         horizontalLayout: 'full'
       })
