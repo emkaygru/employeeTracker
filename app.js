@@ -2,6 +2,21 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 const mysql = require("mysql");
+const chalk = require("chalk")
+const clear = require('clear');
+const figlet = require('figlet');
+
+function initialLoad() {
+  clear();
+
+  console.log(
+    chalk.yellow(
+      figlet.textSync('Employee Tracker', {
+        horizontalLayout: 'full'
+      })
+    )
+  );
+}
 
 // =============== SQL Connection  ===============  //
 const connection = mysql.createConnection({
@@ -106,7 +121,7 @@ function viewAllEmployees() {
 
 // ---------------------------- View All Employees By Roles ---------------------------- //
 function viewAllEmployeesByRoles() {
-  connection.query("SELECT * FROM role", (err, res) => {
+  connection.query("SELECT * FROM role;", (err, res) => {
     if (err) throw err;
     console.table(res);
     startScreen();
@@ -115,7 +130,7 @@ function viewAllEmployeesByRoles() {
 
 // ---------------------------- View All Employees by Department ------------------------- //
 function viewAllEmployeesByDepartments() {
-  connection.query("SELECT * FROM department", (err, res) => {
+  connection.query("SELECT * FROM department;", (err, res) => {
     if (err) throw err;
     console.table(res);
     startScreen();
@@ -137,7 +152,7 @@ function updateEmployee() {
     },
   ]).then((answer) => {
     connection.query(
-      "UPDATE employee SET role_id=? WHERE first_name= ?",
+      "UPDATE employee SET role_id=? WHERE first_name= ?;",
       [answer.updateERole, answer.employeeUpdate],
       (err, res) => {
         if (err) throw err;
@@ -171,7 +186,7 @@ function addEmployee() {
     },
   ]).then((answer) => {
     connection.query(
-      "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+      "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);",
       [
         answer.aeFirstName,
         answer.aeLastName,
@@ -206,7 +221,7 @@ function addRole() {
     },
   ]).then((answer) => {
     connection.query(
-      "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)",
+      "INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?);",
       [answer.aRRole, answer.aRSalary, answer.aRId],
       (err, res) => {
         if (err) throw err;
@@ -214,7 +229,7 @@ function addRole() {
       }
     )
   });
-}
+};
 
 // ---------------------------- Add Department ---------------------------- //
 function addDepartment() {
@@ -224,7 +239,7 @@ function addDepartment() {
     name: "departmentName",
   }, ]).then((answer) => {
     connection.query(
-      "INSERT INTO department (name) VALUES (?)",
+      "INSERT INTO department (name) VALUES (?);",
       [answer.departmentName],
       (err, res) => {
         if (err) throw err;
@@ -233,7 +248,7 @@ function addDepartment() {
       }
     );
   });
-}
+};
 
 function deleteEmployee() {
   inquirer.prompt([{
@@ -247,36 +262,37 @@ function deleteEmployee() {
 
     })
   });
+};
 
-  function deleteDepartment() {
-    inquirer.prompt([{
-      type: "input",
-      message: "Which department do you want to delete?",
-      name: "deleteDepartment"
-    }, ]).then((answer) => {
-      connection.query("DELETE FROM department where department_id=?;", [answer.deleteDepartment], (err, res) => {
-        if (err) throw err;
-        console.table(res);
-      })
+function deleteDepartment() {
+  inquirer.prompt([{
+    type: "input",
+    message: "Which department do you want to delete?",
+    name: "deleteDepartment"
+  }, ]).then((answer) => {
+    connection.query("DELETE FROM department where department_id=?;", [answer.deleteDepartment], (err, res) => {
+      if (err) throw err;
+      console.table(res);
     })
-  };
+  })
+};
 
-  function deleteRole() {
-    inquirer.prompt([{
-      type: "input",
-      message: "Which Role do you want to delete?",
-      name: "deleteRole",
-    }, ]).then((answer) => {
-      connection.query("DELETE FROM role WHERE first_name= ?;", [answer.deleteRole], (err, res) => {
-        if (err) throw err;
-        console.table(res);
-      })
+function deleteRole() {
+  inquirer.prompt([{
+    type: "input",
+    message: "Which Role do you want to delete?",
+    name: "deleteRole",
+  }, ]).then((answer) => {
+    connection.query("DELETE FROM role WHERE first_name= ?;", [answer.deleteRole], (err, res) => {
+      if (err) throw err;
+      console.table(res);
     })
-  }
+  })
+};
 
 
-  // ---------------------------- Quit Function---------------------------- //
-  function quit() {
-    connection.end();
-    process.exit();
-  };
+// ---------------------------- Quit Function---------------------------- //
+function quit() {
+  connection.end();
+  process.exit();
+};
