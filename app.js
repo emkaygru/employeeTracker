@@ -36,8 +36,11 @@ function startScreen() {
       "View all Employees By Departments",
       "Update Employee",
       "Add Employee",
+      "Remove Employee",
       "Add Role",
+      "Remove Role",
       "Add Department",
+      "Remove Role",
       "Quit",
     ]
   }, ]).then((result) => {
@@ -63,12 +66,24 @@ function startScreen() {
         addEmployee();
         break;
 
+      case "Remove Employee":
+        deleteEmployee();
+        break;
+
       case "Add Role":
         addRole();
         break;
 
+      case "Remove Role":
+        deleteRole();
+        break;
+
       case "Add Department":
         addDepartment();
+        break;
+
+      case "Remove Department":
+        deleteDepartment();
         break;
 
       case "Quit":
@@ -220,8 +235,48 @@ function addDepartment() {
   });
 }
 
-// ---------------------------- Quit Function---------------------------- //
-function quit() {
-  connection.end();
-  process.exit();
-};
+function deleteEmployee() {
+  inquirer.prompt([{
+    type: "input",
+    message: "Which employee do you want to delete?",
+    name: "deleteEmployee"
+  }, ]).then((answer) => {
+    connection.query("DELETE FROM employee WHERE first_name=?;", [answer.deleteEmployee], (err, res) => {
+      if (err) throw err;
+      console.table(res);
+
+    })
+  });
+
+  function deleteDepartment() {
+    inquirer.prompt([{
+      type: "input",
+      message: "Which department do you want to delete?",
+      name: "deleteDepartment"
+    }, ]).then((answer) => {
+      connection.query("DELETE FROM department where department_id=?;", [answer.deleteDepartment], (err, res) => {
+        if (err) throw err;
+        console.table(res);
+      })
+    })
+  };
+
+  function deleteRole() {
+    inquirer.prompt([{
+      type: "input",
+      message: "Which Role do you want to delete?",
+      name: "deleteRole",
+    }, ]).then((answer) => {
+      connection.query("DELETE FROM role WHERE first_name= ?;", [answer.deleteRole], (err, res) => {
+        if (err) throw err;
+        console.table(res);
+      })
+    })
+  }
+
+
+  // ---------------------------- Quit Function---------------------------- //
+  function quit() {
+    connection.end();
+    process.exit();
+  };
