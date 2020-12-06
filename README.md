@@ -9,7 +9,7 @@ An employer will be able to add departments, employees, and roles with their cor
 
 
 # Demo
-[EmployeeTracker/demo.gif at master · cmelby/EmployeeTracker · GitHub](https://github.com/cmelby/EmployeeTracker/blob/master/Assets/demo.gif)
+[EmployeeTracker/demo.gif at master · emkaygru/EmployeeTracker · GitHub](https://github.com/emkaygru/EmployeeTracker/blob/master/Assets/demo.gif)
 # Links
 [YouTube](https://youtu.be/7cA52kfYAt8)
 
