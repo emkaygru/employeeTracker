@@ -17,7 +17,7 @@ function initialLoad() {
     )
   );
 }
-
+initialLoad()
 // =============== SQL Connection  ===============  //
 const connection = mysql.createConnection({
   host: "localhost",
@@ -65,11 +65,11 @@ function startScreen() {
         viewAllEmployees();
         break;
 
-      case "View All Employees by Roles":
+      case "View All Employees By Roles":
         viewAllEmployeesByRoles();
         break;
 
-      case "View All Employees by Departments":
+      case "View all Employees By Departments":
         viewAllEmployeesByDepartments();
         break;
 
@@ -252,14 +252,20 @@ function addDepartment() {
 
 function deleteEmployee() {
   inquirer.prompt([{
-    type: "input",
-    message: "Which employee do you want to delete?",
-    name: "deleteEmployee"
-  }, ]).then((answer) => {
-    connection.query("DELETE FROM employee WHERE first_name=?;", [answer.deleteEmployee], (err, res) => {
+      type: "input",
+      message: "What is the FIRST NAME of the employee do you want to delete?",
+      name: "deleteEmployeeFN"
+    },
+    {
+      type: "input",
+      message: "What is the LAST NAME of the employee do you want to delete?",
+      name: "deleteEmployeeLN"
+    },
+  ]).then((answer) => {
+    connection.query("DELETE FROM employee WHERE first_name=? AND last_name=?;", [answer.deleteEmployeeFN, answer.deleteEmployeeLN], (err, res) => {
       if (err) throw err;
       console.table(res);
-
+      startScreen();
     })
   });
 };
@@ -273,6 +279,7 @@ function deleteDepartment() {
     connection.query("DELETE FROM department where department_id=?;", [answer.deleteDepartment], (err, res) => {
       if (err) throw err;
       console.table(res);
+      startScreen();
     })
   })
 };
@@ -286,6 +293,7 @@ function deleteRole() {
     connection.query("DELETE FROM role WHERE first_name= ?;", [answer.deleteRole], (err, res) => {
       if (err) throw err;
       console.table(res);
+      startScreen();
     })
   })
 };
@@ -293,6 +301,19 @@ function deleteRole() {
 
 // ---------------------------- Quit Function---------------------------- //
 function quit() {
+
+  clear();
+
+  console.log(
+    chalk.yellow(
+      figlet.textSync('Goodbye', {
+        horizontalLayout: 'full'
+      })
+    )
+  );
+
   connection.end();
   process.exit();
+
+
 };
