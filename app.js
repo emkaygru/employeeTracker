@@ -57,7 +57,6 @@ function startScreen() {
       "View All Departments",
       "Add Department",
       "Remove Department",
-      "Remove Role",
       "Quit",
     ]
   }, ]).then((result) => {
@@ -290,7 +289,7 @@ function deleteDepartment() {
   }, ]).then((answer) => {
     console.log("You have successfully deleted " + answer.deleteDepartment);
 
-    connection.query("DELETE FROM department where name=?;", [answer.deleteDepartment], (err, res) => {
+    connection.query("DELETE FROM department WHERE name=?;", [answer.deleteDepartment], (err, res) => {
       if (err) throw err;
       console.table(res);
       startScreen();
@@ -312,7 +311,7 @@ function deleteRole() {
     message: "Which Role do you want to delete?",
     name: "deleteRole",
   }, ]).then((answer) => {
-    connection.query("DELETE FROM role WHERE first_name= ?;", [answer.deleteRole], (err, res) => {
+    connection.query("DELETE FROM role WHERE title= ?;", [answer.deleteRole], (err, res) => {
       if (err) throw err;
       console.table(res);
       startScreen();
