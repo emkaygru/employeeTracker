@@ -54,7 +54,9 @@ function startScreen() {
       "Remove Employee",
       "Add Role",
       "Remove Role",
+      "View All Departments",
       "Add Department",
+      "Remove Department",
       "Remove Role",
       "Quit",
     ]
@@ -97,8 +99,16 @@ function startScreen() {
         addDepartment();
         break;
 
+      case "View All Departments":
+        viewAllDepartments();
+        break;
+
       case "Remove Department":
         deleteDepartment();
+        break;
+
+      case "Back to Start":
+        startScreen();
         break;
 
       case "Quit":
@@ -147,7 +157,7 @@ function updateEmployee() {
     },
     {
       type: "input",
-      message: "What do you want to update their role to?",
+      message: "Please add a new Role ID",
       name: "updateERole",
     },
   ]).then((answer) => {
@@ -157,6 +167,7 @@ function updateEmployee() {
       (err, res) => {
         if (err) throw err;
         console.table(res);
+        startScreen();
       }
     )
   });
@@ -226,6 +237,7 @@ function addRole() {
       (err, res) => {
         if (err) throw err;
         console.table(res);
+        startScreen();
       }
     )
   });
@@ -276,13 +288,23 @@ function deleteDepartment() {
     message: "Which department do you want to delete?",
     name: "deleteDepartment"
   }, ]).then((answer) => {
-    connection.query("DELETE FROM department where department_id=?;", [answer.deleteDepartment], (err, res) => {
+    console.log("You have successfully deleted " + answer.deleteDepartment);
+
+    connection.query("DELETE FROM department where name=?;", [answer.deleteDepartment], (err, res) => {
       if (err) throw err;
       console.table(res);
       startScreen();
     })
   })
 };
+
+function viewAllDepartments() {
+  connection.query("SELECT * FROM department", (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    startScreen();
+  })
+}
 
 function deleteRole() {
   inquirer.prompt([{
@@ -314,6 +336,4 @@ function quit() {
 
   connection.end();
   process.exit();
-
-
 };
